@@ -20,11 +20,7 @@ body {
 }
 
 .outline-btn {
-    position: absolute;
-    top: 20px; 
-    right: 20px; 
-
-    background-color: white;
+   background-color: white;
     color: #2c3e50; 
     border: 2px solid #2c3e50; 
     padding: 6px 12px; 
@@ -33,6 +29,12 @@ body {
     cursor: pointer;
     font-weight: bold;
     transition: all 0.2s ease;
+}
+
+#customize-btn {
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
 }
 
 .outline-btn:hover {
@@ -212,9 +214,51 @@ button {
     transform: translateY(-2px);
 }
 
+.actions-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    gap: 15px; 
+    margin-bottom: 20px; 
+}
+
 .copy-wrapper {
     position: relative; 
-    display: inline-block; 
+    display: inline-flex; 
+    align-items: center;  
+    margin: 0;
+}
+
+.qr-box {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    display: none; 
+    margin-top: 15px;   
+    margin-bottom: 25px;
+}
+
+
+.qr-box.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+#qr-btn {
+    padding: 8px 16px;
+    margin: 0;
+    box-sizing: border-box;
+    display: none; 
+}
+
+#copy-btn, #qr-btn {
+    margin: 0; 
+    box-sizing: border-box;
+    height: 42px;
 }
 
 .toast {

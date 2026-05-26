@@ -25,8 +25,12 @@ export function getCharacterPool(level, customLength) {
             charset += charSets.numbers;
             longPassword = 10;
             break;
-        case 'letters':
-            charset += charSets.lowercase + charSets.uppercase;
+        case 'small letters':
+            charset += charSets.lowercase;
+            longPassword = 12;
+            break;
+        case 'large letters':
+            charset += charSets.uppercase;
             longPassword = 12;
             break;
         default:

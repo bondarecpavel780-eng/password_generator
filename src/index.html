@@ -26,7 +26,8 @@
                         <label for="custom-complexity">Complexity:</label>
                         <select id="custom-complexity">
                             <option value="numbers">Only Numbers</option>
-                            <option value="letters">Only Letters</option>
+                            <option value="small letters">Only Small Letters</option>
+                            <option value="large letters">Only Large Letters</option>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
                             <option value="high">High</option>
@@ -51,14 +52,21 @@
             <button class="complexity-btn" data-level="super">Super</button>
         </div>
 
-        <div class="copy-wrapper">
-            <button id="copy-btn">Copy Password</button>
-            <span id="copy-toast" class="toast">Success!</span>
+        <div class="actions-wrapper">
+            <div class="copy-wrapper">
+                <button id="copy-btn">Copy Password</button>
+                <span id="copy-toast" class="toast">Success!</span>
+            </div>
+
+            <button id="qr-btn" class="outline-btn">QR-код</button>
         </div>
+
+        <div id="qr-container" class="qr-box"></div>
 
         <button id="generate-btn">Generate Password</button>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script type="module" src="script.js/main.js"></script>
 </body>
 
