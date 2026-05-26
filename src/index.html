@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Password Generator</h1>
+
+        <div class="password-display">
+            <span id="password-output">Here will be your password...</span>
+        </div>
+
+        <div class="complexity-controls">
+            <button class="complexity-btn active" data-level="low">Low</button>
+            <button class="complexity-btn" data-level="medium">Medium</button>
+            <button class="complexity-btn" data-level="high">High</button>
+            <button class="complexity-btn" data-level="super">Super</button>
+        </div>
+
+        <div class="copy-wrapper">
+            <button id="copy-btn">Copy Password</button>
+            <span id="copy-toast" class="toast">Success!</span>
+        </div>
+
+        <button id="generate-btn">Generate Password</button>
+    </div>
+
+    <script type="module" src="script.js/main.js"></script>
+</body>
+
+</html>
