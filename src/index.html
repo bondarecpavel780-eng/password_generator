@@ -9,6 +9,12 @@
 </head>
 
 <body>
+    <header class="top-bar">
+        <div class="logo-wrapper">
+            <img src="icons/logo.png" alt="Logo" class="logo">
+        </div>
+    </header>
+
     <div class="container">
         <button id="customize-btn" class="outline-btn">Customize</button>
 
@@ -33,6 +39,16 @@
                             <option value="high">High</option>
                             <option value="super">Super</option>
                         </select>
+                            <label for="custom-word">Include word (optional):</label>
+                            <input type="text" id="custom-word" placeholder="your word">
+                        
+                        <div class="toggle-wrapper">
+                            <span class="toggle-label">Random placement:</span>
+                            <label class="switch">
+                                <input type="checkbox" id="random-toggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
                     </div>
 
                     <button id="apply-settings-btn" class="apply-btn">Apply Settings</button>

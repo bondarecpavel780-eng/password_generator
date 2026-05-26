@@ -49,3 +49,34 @@ export function getCharacterPool(level, customLength) {
 
     return password;
 }
+
+export function generatePasswordWithWord(currentLevel, currentLength, wordToInclude, isRandom) {
+    let newPassword = "";
+
+    if (wordToInclude) {
+        const remainingLength = currentLength - wordToInclude.length;
+        let fillerChars = "";
+        
+        if (remainingLength > 0) {
+            fillerChars = getCharacterPool(currentLevel, remainingLength);
+        }
+
+        const safeWord = wordToInclude.slice(0, currentLength);
+        const safeFiller = fillerChars.slice(0, currentLength - safeWord.length);
+
+        if (isRandom) {
+            let combinedArray = (safeWord + safeFiller).split('');
+            for (let i = combinedArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [combinedArray[i], combinedArray[j]] = [combinedArray[j], combinedArray[i]];
+            }
+            newPassword = combinedArray.join('');
+        } else {
+            newPassword = safeWord + safeFiller;
+        }
+    } else {
+        newPassword = getCharacterPool(currentLevel, currentLength);
+    }
+
+    return newPassword;
+}

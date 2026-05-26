@@ -1,6 +1,6 @@
-import {getCharacterPool} from './generator.js';
-import {copyPassword} from './buttonCopyPassword.js';
-import {initModal}  from './modalWindow.js';
+import { generatePasswordWithWord } from './generator.js';
+import { copyPassword } from './buttonCopyPassword.js';
+import { initModal } from './modalWindow.js';
 import { generateQRCode, hideQRCode } from './qrGenerator.js';
 
 initModal();
@@ -12,26 +12,37 @@ const passwordOutput = document.getElementById('password-output'),
     toast = document.getElementById('copy-toast'),
     applyBtn = document.getElementById('apply-settings-btn'),
     qrBtn = document.getElementById('qr-btn'),
-    qrContainer = document.getElementById('qr-container');
+    qrContainer = document.getElementById('qr-container'),
+    customWordInput = document.getElementById('custom-word'),
+    randomToggle = document.getElementById('random-toggle');
 
 let currentLevel = 'low';
 let currentLength = null;
+
+function generateAndDisplayPassword() {
+    const wordToInclude = customWordInput.value;
+    const isRandom = randomToggle.checked;
+    
+    const newPassword = generatePasswordWithWord(currentLevel, currentLength, wordToInclude, isRandom);
+
+    passwordOutput.textContent = newPassword;
+
+    copyBtn.style.display = 'inline-block';
+    qrBtn.style.display = 'inline-block';
+}
 
 complexityBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
         complexityBtns.forEach(b => b.classList.remove('active'));
         e.target.classList.add('active');
-        
+
         currentLevel = e.target.dataset.level;
     });
 });
 
 generateBtn.addEventListener('click', () => {
-    const newPassword = getCharacterPool(currentLevel, currentLength);
-    passwordOutput.textContent = newPassword;
-
-    copyBtn.style.display = 'inline-block';
-    qrBtn.style.display = 'inline-block';
+    generateAndDisplayPassword();
+    hideQRCode(qrContainer);
 });
 
 copyBtn.addEventListener('click', () => {
@@ -50,11 +61,7 @@ applyBtn.addEventListener('click', () => {
     currentLength = Number(lengthValue);
     currentLevel = complexityValue;
 
-    const newPassword = getCharacterPool(currentLevel, currentLength);
-    passwordOutput.textContent = newPassword;
-
-    copyBtn.style.display = 'inline-block';
-    qrBtn.style.display = 'inline-block';
+    generateAndDisplayPassword();
 
     const modal = document.getElementById('customize-modal');
     modal.classList.remove('open');
@@ -62,18 +69,7 @@ applyBtn.addEventListener('click', () => {
 
 qrBtn.addEventListener('click', () => {
     const password = passwordOutput.textContent;
-
-    if (!password) return; 
+    if (!password) return;
     
     generateQRCode(password, qrContainer);
-});
-
-generateBtn.addEventListener('click', () => {
-    const newPassword = getCharacterPool(currentLevel, currentLength);
-    passwordOutput.textContent = newPassword;
-    
-    copyBtn.style.display = 'inline-block';
-    qrBtn.style.display = 'inline-block';
-
-    hideQRCode(qrContainer);
 });
