@@ -10,6 +10,34 @@
 
 <body>
     <div class="container">
+        <button id="customize-btn" class="outline-btn">Customize</button>
+
+        <div id="customize-modal" class="modal-overlay">
+            <div class="modal-content">
+                <button id="close-modal-btn" class="close-btn">&times;</button>
+                <h2>Customize</h2>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <label for="custom-length">Length password:</label>
+                        <input type="number" id="custom-length" min="4" max="100" value="12">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="custom-complexity">Complexity:</label>
+                        <select id="custom-complexity">
+                            <option value="numbers">Only Numbers</option>
+                            <option value="letters">Only Letters</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="super">Super</option>
+                        </select>
+                    </div>
+
+                    <button id="apply-settings-btn" class="apply-btn">Apply Settings</button>
+                </div>
+            </div>
+        </div>
         <h1>Password Generator</h1>
 
         <div class="password-display">

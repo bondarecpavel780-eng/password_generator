@@ -1,11 +1,10 @@
 import { charSets } from './charcters.js';
 
-export function getCharacterPool(level) {
+export function getCharacterPool(level, customLength) {
     let charset = '';
     let longPassword = 8;
 
     switch (level) {
-
         case 'low':
             charset += charSets.lowercase + charSets.numbers;
             longPassword = 10;
@@ -22,8 +21,20 @@ export function getCharacterPool(level) {
             charset += charSets.lowercase + charSets.uppercase + charSets.numbers + charSets.symbols + charSets.superSymbols;
             longPassword = 30;
             break;
+        case 'numbers':
+            charset += charSets.numbers;
+            longPassword = 10;
+            break;
+        case 'letters':
+            charset += charSets.lowercase + charSets.uppercase;
+            longPassword = 12;
+            break;
         default:
             charset += charSets.lowercase;
+    }
+
+    if (customLength) {
+        longPassword = customLength;
     }
 
     let password = '';
@@ -33,5 +44,4 @@ export function getCharacterPool(level) {
     }
 
     return password;
-
 }

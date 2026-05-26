@@ -1,13 +1,19 @@
 import {getCharacterPool} from './generator.js';
 import {copyPassword} from './buttonCopyPassword.js';
+import {initModal}  from './modalWindow.js';
+
+
+initModal();
 
 const passwordOutput = document.getElementById('password-output'),
     generateBtn = document.getElementById('generate-btn'),
     complexityBtns = document.querySelectorAll('.complexity-btn'),
     copyBtn = document.getElementById('copy-btn'),
-    toast = document.getElementById('copy-toast');
+    toast = document.getElementById('copy-toast'),
+    applyBtn = document.getElementById('apply-settings-btn');
 
-let currentLevel = 'low'; 
+let currentLevel = 'low';
+let currentLength = null;
 
 complexityBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -19,7 +25,7 @@ complexityBtns.forEach(btn => {
 });
 
 generateBtn.addEventListener('click', () => {
-    const newPassword = getCharacterPool(currentLevel);
+    const newPassword = getCharacterPool(currentLevel, currentLength);
     passwordOutput.textContent = newPassword;
 
     copyBtn.style.display = 'inline-block';
@@ -34,3 +40,18 @@ copyBtn.addEventListener('click', () => {
     }, 1000);
 });
 
+applyBtn.addEventListener('click', () => {
+    const lengthValue = document.getElementById('custom-length').value;
+    const complexityValue = document.getElementById('custom-complexity').value;
+
+    currentLength = Number(lengthValue);
+    currentLevel = complexityValue;
+
+    const newPassword = getCharacterPool(currentLevel, currentLength);
+    passwordOutput.textContent = newPassword;
+
+    copyBtn.style.display = 'inline-block';
+
+    const modal = document.getElementById('customize-modal');
+    modal.classList.remove('open');
+});
