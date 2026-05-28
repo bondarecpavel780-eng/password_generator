@@ -327,8 +327,9 @@ button {
 
 .toggle-label {
     font-size: 0.9rem;
-    font-weight: bold;
+    font-weight: 600;
     color: #2c3e50;
+    white-space: nowrap;
 }
 
 .switch {
@@ -373,30 +374,12 @@ button {
     transform: translateX(18px);
 }
 
-
-.custom-word-label {
-    display: block;
-    margin-top: 10px;
-}
-
 .passphrase-group {
     display: none; 
     flex-direction: column;
     gap: 12px;
     margin-top: 15px;
 }
-
-
-.compact-toggle {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.no-margin-toggle {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 
 .normal-weight {
     font-weight: normal;
@@ -418,13 +401,6 @@ button {
     min-width: 100%;
 }
 
-.toggle-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #2c3e50;
-    white-space: nowrap;
-}
-
 .hidden-ui {
     display: none !important;
 }
@@ -440,14 +416,12 @@ button {
     gap: 20px;
 }
 
-/* spacing for password-only fields to separate Length and Include word */
 #password-only-group {
     display: flex;
     flex-direction: column;
     gap: 18px;
 }
 
-/* Random placement toggle positioning */
 #random-placement-wrapper {
     justify-content: flex-start !important;
     gap: 6px !important;

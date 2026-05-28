@@ -1,6 +1,6 @@
-import { charSets } from './charcters.js';
+import { charSets } from './characters.js';
 
-export function getCharacterPool(level, customLength) {
+export function generateRawPassword(level, customLength) {
     let charset = '';
     let longPassword = 8;
 
@@ -58,7 +58,7 @@ export function generatePasswordWithWord(currentLevel, currentLength, wordToIncl
         let fillerChars = "";
         
         if (remainingLength > 0) {
-            fillerChars = getCharacterPool(currentLevel, remainingLength);
+            fillerChars = generateRawPassword(currentLevel, remainingLength);
         }
 
         const safeWord = wordToInclude.slice(0, currentLength);
@@ -75,7 +75,7 @@ export function generatePasswordWithWord(currentLevel, currentLength, wordToIncl
             newPassword = safeWord + safeFiller;
         }
     } else {
-        newPassword = getCharacterPool(currentLevel, currentLength);
+        newPassword = generateRawPassword(currentLevel, currentLength);
     }
 
     return newPassword;

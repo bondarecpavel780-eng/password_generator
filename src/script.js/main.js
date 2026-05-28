@@ -25,10 +25,31 @@ const passwordOutput = document.getElementById('password-output'),
     wordSeparatorInput = document.getElementById('word-separator'),
     customLengthInput = document.getElementById('custom-length'),
     passphraseCapitalize = document.getElementById('passphrase-capitalize'),
-    passphraseNumber = document.getElementById('passphrase-number');
+    passphraseNumber = document.getElementById('passphrase-number'),
+    passphraseCustomWords = document.getElementById('passphrase-custom-words'),
+    passphraseRandomToggle = document.getElementById('passphrase-random-toggle');
 
 let currentLevel = 'low';
-let currentLength = 12;
+let currentLength = 10;
+
+const DEFAULT_LENGTHS = {
+    low: 10,
+    medium: 16,
+    high: 20,
+    super: 30,
+    numbers: 10,
+    'small letters': 12,
+    'large letters': 12
+};
+
+function syncDefaultLength(level) {
+    if (DEFAULT_LENGTHS[level]) {
+        currentLength = DEFAULT_LENGTHS[level];
+        if (customLengthInput) {
+            customLengthInput.value = currentLength;
+        }
+    }
+}
 
 function updateModalUI(level) {
     if (level === 'passphrase') {
@@ -46,24 +67,41 @@ function updateModalUI(level) {
 
 complexitySelect.addEventListener('change', (e) => {
     currentLevel = e.target.value;
+    syncDefaultLength(currentLevel);
     updateModalUI(currentLevel);
 });
 
-updateModalUI(complexitySelect.value);
+// Initialize consistent state on page load
+complexitySelect.value = currentLevel;
+syncDefaultLength(currentLevel);
+updateModalUI(currentLevel);
 
 function generateAndDisplayPassword() {
     let newPassword = "";
+    hideQRCode(qrContainer);
 
     if (currentLevel === 'passphrase') {
-        const wordCount = Number(wordCountInput.value);
+        let wordCount = Number(wordCountInput.value);
+        if (isNaN(wordCount) || wordCount < 2) wordCount = 2;
+        if (wordCount > 10) wordCount = 10;
+        wordCountInput.value = wordCount;
+
         const separator = wordSeparatorInput.value;
         const isCapitalized = passphraseCapitalize.checked;
         const hasNumber = passphraseNumber.checked;
+        const customWords = passphraseCustomWords.value;
+        const shuffleWords = passphraseRandomToggle.checked;
         
-        newPassword = generatePassphrase(wordCount, separator, isCapitalized, hasNumber);
+        newPassword = generatePassphrase(wordCount, separator, isCapitalized, hasNumber, customWords, shuffleWords);
         
         complexityBtns.forEach(b => b.classList.remove('active'));
     } else {
+        let length = Number(customLengthInput.value);
+        if (isNaN(length) || length < 4) length = 4;
+        if (length > 100) length = 100;
+        customLengthInput.value = length;
+        currentLength = length;
+
         const wordToInclude = customWordInput.value;
         const isRandom = randomToggle.checked;
         
@@ -84,13 +122,13 @@ complexityBtns.forEach(btn => {
         if (complexitySelect) {
             complexitySelect.value = currentLevel;
         }
+        syncDefaultLength(currentLevel);
         updateModalUI(currentLevel);
     });
 });
 
 generateBtn.addEventListener('click', () => {
     generateAndDisplayPassword();
-    hideQRCode(qrContainer);
 });
 
 copyBtn.addEventListener('click', () => {
@@ -105,7 +143,14 @@ copyBtn.addEventListener('click', () => {
 
 applyBtn.addEventListener('click', () => {
     currentLevel = complexitySelect.value;
-    currentLength = Number(customLengthInput.value);
+    
+    complexityBtns.forEach(btn => {
+        if (btn.dataset.level === currentLevel) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 
     generateAndDisplayPassword();
 
@@ -115,6 +160,6 @@ applyBtn.addEventListener('click', () => {
 
 qrBtn.addEventListener('click', () => {
     const password = passwordOutput.textContent;
-    if (!password) return;
+    if (!password || password === "Here will be your password...") return;
     generateQRCode(password, qrContainer);
 });

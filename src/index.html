@@ -67,6 +67,11 @@
                             <label for="word-separator">Separator:</label>
                             <input type="text" id="word-separator" value=""  placeholder="your symbol">
                         </div>
+
+                        <div class="input-group">
+                            <label for="passphrase-custom-words">Your Words (optional, space-separated):</label>
+                            <input type="text" id="passphrase-custom-words" placeholder="e.g. cat dog apple">
+                        </div>
                     </div>
 
                     <div id="passphrase-toggles" class="toggles-container hidden-ui">
@@ -81,6 +86,13 @@
                             <span class="toggle-label normal-weight">Include a number:</span>
                             <label class="switch">
                                 <input type="checkbox" id="passphrase-number">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <span class="toggle-label normal-weight">Random placement:</span>
+                            <label class="switch">
+                                <input type="checkbox" id="passphrase-random-toggle">
                                 <span class="slider"></span>
                             </label>
                         </div>
