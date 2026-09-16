@@ -46,26 +46,35 @@ body {
 }
 
 .outline-btn {
-   background-color: white;
-    color: #2c3e50; 
-    border: 2px solid #2c3e50; 
-    padding: 6px 12px; 
-    font-size: 0.8rem;
+    background-color: #e67e22;
+    color: white;
+    border: 2px solid #d35400;
+    padding: 10px 18px;
+    font-size: 0.95rem;
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
-    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(211, 84, 0, 0.35);
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 #customize-btn {
     position: absolute; 
     top: 20px; 
     right: 20px; 
+    z-index: 1;
 }
 
 .outline-btn:hover {
-    background-color: #2c3e50; 
-    color: white; 
+    background-color: #d35400;
+    border-color: #a04000;
+    box-shadow: 0 6px 14px rgba(211, 84, 0, 0.45);
+    transform: translateY(-2px);
+}
+
+.outline-btn:focus-visible {
+    outline: 3px solid rgba(230, 126, 34, 0.35);
+    outline-offset: 3px;
 }
 
 .modal-overlay {
@@ -146,13 +155,13 @@ body {
     width: 100%;
     box-sizing: border-box;
     padding: 10px 10px;
-    border: 1px solid #bdc3c7; /* keep layout stable */
+    border: 1px solid #bdc3c7;
     border-radius: 8px;
     font-size: 1rem;
     color: #2c3e50;
     outline: none;
     transition: border-color 0.16s ease, box-shadow 0.16s ease;
-    box-shadow: 0 0 0 6px rgba(191,195,199,0.38); /* stronger visual thickness without changing size */
+    box-shadow: 0 0 0 6px rgba(191,195,199,0.38);
 }
 
 .input-group input:focus,
@@ -191,6 +200,61 @@ body {
     min-height: 24px;
 }
 
+.password-strength {
+    width: 100%;
+    box-sizing: border-box;
+    margin: -4px 0 22px;
+    text-align: left;
+}
+
+.strength-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    color: #7f8c8d;
+    font-size: 0.82rem;
+}
+
+.strength-header strong {
+    color: #2c3e50;
+}
+
+.strength-track {
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    background: #dfe4e6;
+    border-radius: 999px;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    transition: width 0.35s ease, background-color 0.35s ease;
+}
+
+.strength-1 {
+    background-color: #e74c3c;
+}
+
+.strength-2 {
+    background-color: #e67e22;
+}
+
+.strength-3 {
+    background-color: #f1c40f;
+}
+
+.strength-4 {
+    background-color: #2ecc71;
+}
+
+.strength-5 {
+    background-color: #27ae60;
+}
+
 .complexity-controls {
     display: flex;
     gap: 10px;
@@ -216,7 +280,6 @@ button {
 #copy-btn {
     background: #2980b9;
     color: white;
-    margin-bottom: 20px;
     display: none;
 }
 
@@ -260,14 +323,11 @@ button {
 }
 
 .qr-box {
-    margin-top: 20px;
-    display: flex;
     justify-content: center;
-    display: none; 
-    margin-top: 15px;   
+    display: none;
+    margin-top: 15px;
     margin-bottom: 25px;
 }
-
 
 .qr-box.show {
     display: flex;
@@ -278,15 +338,15 @@ button {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 #qr-btn {
     padding: 8px 16px;
-    margin: 0;
     box-sizing: border-box;
-    display: none; 
+    display: none;
 }
 
 #copy-btn, #qr-btn {
-    margin: 0; 
+    margin: 0;
     box-sizing: border-box;
     height: 42px;
 }
@@ -296,7 +356,6 @@ button {
     top: -20px; 
     right: -25px; 
     z-index: 1;
-    /*style*/
     background-color: white;
     color: #2c3e50;
     padding: 4px 8px;
@@ -304,7 +363,6 @@ button {
     font-size: 0.8rem;
     font-weight: bold;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    /*animating*/
     opacity: 0; 
     pointer-events: none; 
     transform: translateY(10px); 

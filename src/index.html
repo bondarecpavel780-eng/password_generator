@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Generator</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="icons/mini_logo.png">
 </head>
 
 <body>
@@ -40,7 +41,7 @@
                     <div id="password-only-group">
                         <div class="input-group">
                             <label for="custom-length">Length password:</label>
-                            <input type="number" id="custom-length" min="4" max="100" value="12">
+                            <input type="number" id="custom-length" min="4" value="12">
                         </div>
 
                         <div class="input-group">
@@ -106,6 +107,16 @@
 
         <div class="password-display">
             <span id="password-output">Here will be your password...</span>
+        </div>
+
+        <div id="password-strength" class="password-strength" aria-live="polite" hidden>
+            <div class="strength-header">
+                <span>Password strength</span>
+                <strong id="strength-label"></strong>
+            </div>
+            <div class="strength-track" role="progressbar" aria-label="Password strength" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div id="strength-bar" class="strength-bar"></div>
+            </div>
         </div>
 
         <div class="complexity-controls">

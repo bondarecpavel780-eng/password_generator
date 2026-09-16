@@ -9,6 +9,10 @@ initModal();
 const passwordOutput = document.getElementById('password-output'),
     generateBtn = document.getElementById('generate-btn'),
     complexityBtns = document.querySelectorAll('.complexity-btn'),
+    strengthPanel = document.getElementById('password-strength'),
+    strengthBar = document.getElementById('strength-bar'),
+    strengthLabel = document.getElementById('strength-label'),
+    strengthTrack = strengthPanel.querySelector('.strength-track'),
     copyBtn = document.getElementById('copy-btn'),
     toast = document.getElementById('copy-toast'),
     applyBtn = document.getElementById('apply-settings-btn'),
@@ -65,6 +69,61 @@ function updateModalUI(level) {
     }
 }
 
+function checkPasswordStrength(password) {
+    const length = password.length;
+    const isOnlyDigits = /^\d+$/.test(password);
+    const isOnlyLowercase = /^[a-z]+$/.test(password);
+    const isOnlyUppercase = /^[A-Z]+$/.test(password);
+
+    if (isOnlyDigits || isOnlyLowercase || isOnlyUppercase) {
+        const percent = Math.min(100, length <= 10 ? length * 1.5 : 15 + (length - 10) * 3.2);
+        const roundedPercent = Number(percent.toFixed(1));
+        const status = roundedPercent <= 25
+            ? 'Low'
+            : roundedPercent <= 50
+                ? 'Medium'
+                : roundedPercent <= 75
+                    ? 'High'
+                    : 'Super';
+
+        return { percent: roundedPercent, status };
+    }
+
+    const uppercaseCount = (password.match(/[A-Z]/g) || []).length;
+    const digitCount = (password.match(/\d/g) || []).length;
+    const specialCharacterCount = (password.match(/[^A-Za-z0-9]/g) || []).length;
+    const firstTenCharactersScore = Math.min(length, 10);
+    const additionalCharactersScore = Math.max(length - 10, 0) * 2;
+    const percent = Math.min(
+        100,
+        firstTenCharactersScore
+                + additionalCharactersScore
+                + uppercaseCount * 2
+                + digitCount * 4
+                + specialCharacterCount * 7
+    );
+    const status = percent <= 25
+        ? 'Low'
+        : percent <= 50
+            ? 'Medium'
+            : percent <= 75
+                ? 'High'
+                : 'Super';
+
+    return { percent, status };
+}
+
+function updatePasswordStrength(password) {
+    const { percent, status } = checkPasswordStrength(password);
+
+    strengthPanel.hidden = false;
+    strengthBar.style.width = `${percent}%`;
+    strengthBar.className = `strength-bar strength-${Math.max(1, Math.ceil(percent / 20))}`;
+    strengthLabel.textContent = `${status} (${percent}%)`;
+    strengthTrack.setAttribute('aria-valuenow', percent);
+    strengthTrack.setAttribute('aria-valuetext', `${status}, ${percent}%`);
+}
+
 complexitySelect.addEventListener('change', (e) => {
     currentLevel = e.target.value;
     syncDefaultLength(currentLevel);
@@ -98,7 +157,6 @@ function generateAndDisplayPassword() {
     } else {
         let length = Number(customLengthInput.value);
         if (isNaN(length) || length < 4) length = 4;
-        if (length > 100) length = 100;
         customLengthInput.value = length;
         currentLength = length;
 
@@ -109,6 +167,7 @@ function generateAndDisplayPassword() {
     }
 
     passwordOutput.textContent = newPassword;
+    updatePasswordStrength(newPassword);
     copyBtn.style.display = 'inline-block';
     qrBtn.style.display = 'inline-block';
 }
